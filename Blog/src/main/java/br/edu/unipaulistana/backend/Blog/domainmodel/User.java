@@ -5,7 +5,7 @@ import lombok.*;
 import java.util.List;
 
 @NoArgsConstructor
-@AllArgsConstructor
+@AllArgsConstructor // cria construtores
 @ToString
 
 public class User {
@@ -15,6 +15,5 @@ public class User {
     private @Getter @Setter String password;
     private @Getter @Setter List<Role> roles;
     private @Getter @Setter Profile profile;
-
 
 }
