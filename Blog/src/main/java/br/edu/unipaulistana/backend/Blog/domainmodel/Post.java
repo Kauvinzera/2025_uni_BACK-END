@@ -13,4 +13,5 @@ public class Post {
     private @Getter @Setter String content;
     private @Getter @Setter User user;
     private @Getter @Setter Set<Tag> tags;
+
 }

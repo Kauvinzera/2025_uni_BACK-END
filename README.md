@@ -1,2 +1,2 @@
-# 2025_uni_BACK-END
-BACK- END Repository of software developed in college
+# 2025_2_unp_2ads_backend
+Backend classes for UNP 2025/2
