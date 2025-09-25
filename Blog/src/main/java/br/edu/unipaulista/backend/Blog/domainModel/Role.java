@@ -1,4 +1,4 @@
-package br.edu.unipaulistana.backend.Blog.domainmodel;
+package br.edu.unipaulista.backend.Blog.domainModel;
 
 import lombok.*;
 
@@ -8,7 +8,7 @@ import java.util.Set;
 @AllArgsConstructor
 @ToString
 public class Role {
-    private @Getter @Setter Long id;
+    private @Getter @Setter long id;
     private @Getter @Setter String name;
     private @Getter @Setter Set<User> user;
 }

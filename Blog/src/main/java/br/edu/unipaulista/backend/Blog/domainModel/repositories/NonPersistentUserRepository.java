@@ -1,23 +1,20 @@
-package br.edu.unipaulistana.backend.Blog.domainmodel.repositories;
+package br.edu.unipaulista.backend.Blog.domainModel.repositories;
 
-import br.edu.unipaulistana.backend.Blog.domainmodel.User;
+import br.edu.unipaulista.backend.Blog.domainModel.User;
+import com.github.javafaker.Faker;
+import org.springframework.stereotype.Component;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
-import com.github.javafaker.Faker;
-import org.springframework.stereotype.Component;
-
-
 @Component
 public class NonPersistentUserRepository {
-
     private List<User> internalState = new LinkedList<>();
 
     public NonPersistentUserRepository() {
         Faker faker = new Faker();
-        for( int i = 0; i < 100; i++ ) {
+        for(int i = 0; i < 100; i++) {
             User user = new User(
                     UUID.randomUUID(),
                     faker.name().fullName(),
@@ -28,7 +25,6 @@ public class NonPersistentUserRepository {
             );
             this.internalState.add(user);
         }
-
     }
 
     public List<User> findAll() {
@@ -37,15 +33,28 @@ public class NonPersistentUserRepository {
 
     public User findById(UUID id) {
         for(User user : this.internalState) {
-            if(user.getId().equals(id))
+            if(user.getId().equals(id)) {
                 return user;
+            }
+            return null;
         }
         return null;
     }
-    public void removeById(UUID id) {
+
+    public void removeById(UUID id){
         this.internalState.removeIf(
-                user ->
-                        user.getId().equals(id)
+                user -> user.getId().equals(id)
         );
+    }
+
+    public User create(User user) {
+        this.internalState.add(user);
+        return user;
+    }
+
+    public User update(User user) {
+        this.internalState.remove(user);
+        this.internalState.add(user);
+        return user;
     }
 }

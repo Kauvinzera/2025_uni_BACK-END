@@ -1,4 +1,4 @@
-package br.edu.unipaulistana.backend.Blog;
+package br.edu.unipaulista.backend.Blog;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
