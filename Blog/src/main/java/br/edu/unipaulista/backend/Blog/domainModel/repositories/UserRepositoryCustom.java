@@ -4,10 +4,8 @@ import br.edu.unipaulista.backend.Blog.domainModel.User;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
-public interface UserRepositoryCustom<User, UUID> {
-    public Optional<User> findByIdWithProfileAndPostsCriteria(UUID id);
+public interface UserRepositoryCustom<U, U1> {
+    public Optional<User> findByIdWithProfileAndPostCriteria(java.util.UUID id);
     public List<User> findByMinRolesAndNameLikeCriteria(int minRoles, String name);
-
 }

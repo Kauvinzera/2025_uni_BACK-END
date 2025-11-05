@@ -11,49 +11,46 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-
 @RequiredArgsConstructor
-public class UserRepositoryImpl implements  UserRepositoryCustom<User, UUID> {
+public class UserRepositoryImpl implements UserRepositoryCustom<User, UUID> {
 
-@PersistenceContext
-private final EntityManager entityManager;
-    private Selection<? extends User> root;
+    @PersistenceContext
+    private final EntityManager entityManager;
 
     @Override
-public Optional<User> findByIdWithProfileAndPostsCriteria(UUID id) {
-    CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-    CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
-    //Fetch = Join
-    Root<User> root = criteriaQuery.from(User.class);
-    Fetch<User, ?> profileFetch = root.fetch("profile", JoinType.LEFT);
-    Fetch<User, ?> rolesFetch = root.fetch("roles", JoinType.LEFT);
+    public Optional<User> findByIdWithProfileAndPostCriteria(UUID id) {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
 
-    criteriaQuery.select(root)
-    .distinct(true)
-            .where(criteriaBuilder.equal(root.get("id"), id));
+        Root<User> root = criteriaQuery.from(User.class);
+        Fetch<User, ?> profileFetch = root.fetch("profile", JoinType.LEFT);
+        Fetch<User, ?> rolesFetch = root.fetch("roles", JoinType.LEFT);
 
-    TypedQuery<User> query = entityManager.createQuery(criteriaQuery);
-    List<User> users = query.getResultList();
+        criteriaQuery.select(root)
+                .distinct(true)
+                .where(criteriaBuilder.equal(root.get("id"), id));
 
-    return users.stream().findFirst();
-}
+        TypedQuery<User> query = entityManager.createQuery(criteriaQuery);
+        List<User> users = query.getResultList();
 
-@Override
-public List<User> findByMinRolesAndNameLikeCriteria(int minRoles, String name) {
-    CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-    CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
-    Root<User> root = criteriaQuery.from(User.class);
+        return users.stream().findFirst();
+    }
 
-    criteriaQuery.select(root)
-            .where(criteriaBuilder.and(
-                    criteriaBuilder.greaterThanOrEqualTo(criteriaBuilder.size(root.get("roles")), minRoles),
-                    criteriaBuilder.like(criteriaBuilder.lower(root.get("name")), "%" + name + "%")
+    @Override
+    public List<User> findByMinRolesAndNameLikeCriteria(int minRoles, String name) {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
 
-            )
-            )
-            .orderBy(criteriaBuilder.asc(root.get("name")));
-    return this.entityManager.createQuery(criteriaQuery).getResultList();
+        Root<User> root = criteriaQuery.from(User.class);
 
-}
-
+        criteriaQuery.select(root)
+                .where(
+                        criteriaBuilder.and(
+                                criteriaBuilder.greaterThanOrEqualTo(criteriaBuilder.size(root.get("roles")), minRoles),
+                                criteriaBuilder.like(criteriaBuilder.lower(root.get("name")), "%" + name + "%")
+                        )
+                )
+                .orderBy(criteriaBuilder.asc(root.get("name")));
+        return this.entityManager.createQuery(criteriaQuery).getResultList();
+    }
 }

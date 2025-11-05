@@ -15,9 +15,9 @@ public class Role {
     @Column(name = "ID")
     private @Getter @Setter long id;
 
-    @Column(name = "NAME", nullable = false, length = 20)
+    @Column(name = "NAEME", nullable = false, length = 20)
     private @Getter @Setter String name;
 
-    @ManyToMany(mappedBy = "roles")
-    private @Getter @Setter Set<User> users;
+    @ManyToMany
+    private @Getter @Setter Set<User> user;
 }
