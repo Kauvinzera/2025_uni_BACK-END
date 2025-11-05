@@ -18,6 +18,6 @@ public class Role {
     @Column(name = "NAME", nullable = false, length = 20)
     private @Getter @Setter String name;
 
-    @ManyToMany
-    private @Getter @Setter Set<User> user;
+    @ManyToMany(mappedBy = "roles")
+    private @Getter @Setter Set<User> users;
 }

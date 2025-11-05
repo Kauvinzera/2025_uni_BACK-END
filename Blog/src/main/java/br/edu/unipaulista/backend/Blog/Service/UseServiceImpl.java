@@ -23,7 +23,7 @@ public class UseServiceImpl implements UserService {
 
     @Override
     public User findById(UUID id) {
-        return this.repository.findById().orElse(null);
+        return this.repository.findById(id).orElse(null);
     }
 
     @Override
