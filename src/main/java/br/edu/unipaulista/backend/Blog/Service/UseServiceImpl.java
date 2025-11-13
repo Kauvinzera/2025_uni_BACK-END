@@ -4,6 +4,7 @@ import br.edu.unipaulista.backend.Blog.domainModel.User;
 import br.edu.unipaulista.backend.Blog.domainModel.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -49,4 +50,9 @@ public class UseServiceImpl implements UserService {
     public User partialUpdate(User user) {
         return this.repository.save(user);
     }
+
+public UserDetails loadUserByUsername(String username) throws UsernameNotFoundExceptions
+    return this.repository.findByName
+
+
 }
