@@ -52,7 +52,7 @@ public class UseServiceImpl implements UserService {
     }
 
 public UserDetails loadUserByUsername(String username) throws UsernameNotFoundExceptions
-    return this.repository.findByName
+    return this.repository.findByName;
 
 
 }
